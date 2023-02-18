@@ -1,13 +1,13 @@
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from '@src/auth/auth.module';
-import { SearchModule } from '@src/search/search.module';
-import { UserModule } from '@src/user/user.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { typeOrmAsyncConfig } from './config/typeorm.config';
+import { AuthModule } from '@server/auth/auth.module';
+import { UserModule } from '@server/user/user.module';
+import { SearchModule } from '@server/search/search.module';
 
 @Module({
   imports: [
