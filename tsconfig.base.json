@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@common-types": ["libs/common-types/src/index.ts"],
+      "@common-types/*": ["libs/common-types/src/*"],
       "@server": ["apps/vk-improved-search/src"],
       "@server/*": ["apps/vk-improved-search/src/*"]
     }

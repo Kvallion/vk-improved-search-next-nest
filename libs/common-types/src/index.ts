@@ -1,1 +1,1 @@
-export * from './lib/common-types';
+export * from './models/index';

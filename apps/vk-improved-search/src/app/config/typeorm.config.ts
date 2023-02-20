@@ -3,6 +3,8 @@ import {
   TypeOrmModuleAsyncOptions,
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
+import { RatingListEntity } from '@server/user/entities/ratingList.entity';
+import { UserEntity } from '@server/user/entities/user.entity';
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -17,6 +19,6 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_NAME'),
     synchronize: configService.get('DB_SYNC'),
-    entities: [],
+    entities: [UserEntity, RatingListEntity],
   }),
 };
