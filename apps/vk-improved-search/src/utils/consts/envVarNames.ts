@@ -1,0 +1,9 @@
+export const DB_HOST = 'DB_HOST';
+export const DB_PORT = 'DB_PORT';
+export const DB_USERNAME = 'DB_USERNAME';
+export const DB_NAME = 'DB_NAME';
+export const DB_SYNC = 'DB_SYNC';
+export const JWT_SECRET_KEY = 'JWT_SECRET_KEY';
+export const JWT_EXPIRES_IN = 'JWT_EXPIRES_IN';
+export const JWT_REFRESH_SECRET_KEY = 'JWT_REFRESH_SECRET_KEY';
+export const JWT_REFRESH_EXPIRES_IN = 'JWT_REFRESH_EXPIRES_IN';

@@ -4,12 +4,14 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthCredentialsDto } from './dto/userCreation.dto';
 import { RatingListEntity } from './entities/ratingList.entity';
 import { UserEntity } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -17,8 +19,16 @@ export class UserService {
 
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>
+    public readonly userRepository: Repository<UserEntity>
   ) {}
+
+  async getUserById(id: number) {
+    const user = this.userRepository.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} is not found`);
+    }
+    return user;
+  }
 
   async createUser({
     username,
@@ -29,7 +39,7 @@ export class UserService {
       username,
       password: passwordHash,
       role: UserRole.USER,
-      accessToken: null,
+      refreshTokenHash: null,
     });
 
     const ratingList = RatingListEntity.create({ user });
@@ -45,5 +55,15 @@ export class UserService {
       }
       throw new InternalServerErrorException();
     }
+  }
+
+  async updateRefreshToken(userId: number, refreshToken: string | null) {
+    const user = await this.getUserById(userId);
+    if (!refreshToken) {
+      user.refreshTokenHash = null;
+    } else {
+      user.refreshTokenHash = await bcrypt.hash(refreshToken, 6);
+    }
+    await user.save();
   }
 }

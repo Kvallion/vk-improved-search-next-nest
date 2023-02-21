@@ -5,7 +5,6 @@ export interface IUser {
   username: string;
   password: string;
   role: UserRole;
-  accessToken: string;
   ratingList: RatingList;
 }
 

@@ -25,23 +25,23 @@ export class UserEntity extends BaseEntity implements IUser {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
-  @Column('varchar', { length: 200, nullable: true })
-  accessToken: string;
-
   @OneToOne((type) => RatingListEntity, (list) => list.user)
   ratingList: RatingListEntity;
+
+  @Column('varchar', { length: 250, nullable: true })
+  refreshTokenHash: string;
 
   static async hashPassword(password: string) {
     return bcrypt.hash(password, 5);
   }
 
-  static async validatePassword(
+  static async idPasswordValid(
     password: string,
     passwordHash: string
   ): Promise<boolean> {
-    return (await this.hashPassword(password)) === passwordHash;
+    return await bcrypt.compare(password, passwordHash);
   }
-  async validatePassword(passwordHash: string): Promise<boolean> {
-    return (await UserEntity.hashPassword(this.password)) === passwordHash;
+  async idPasswordValid(password: string): Promise<boolean> {
+    return UserEntity.idPasswordValid(password, this.password);
   }
 }
